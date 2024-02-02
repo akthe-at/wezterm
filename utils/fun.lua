@@ -160,9 +160,9 @@ end
 ---@return '"kanagawa-wave"'|'"kanagawa-lotus"' colorscheme name of the colorscheme
 M.get_scheme = function()
   if (wez.gui and wez.gui.get_appearance() or "Dark"):find "Dark" then
-    return "kanagawa-wave"
+    return "kanagawa-dragon"
   end
-  return "kanagawa-lotus"
+  return "kanagawa-wave"
 end
 
 M.gsplit = function(s, sep, opts)

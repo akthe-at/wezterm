@@ -7,44 +7,26 @@ local fun = require "utils.fun" ---@class Fun
 ---@class Config
 local Config = {}
 
-if fun.is_windows then
-  Config.default_prog =
-    { "pwsh", "-NoLogo", "-ExecutionPolicy", "RemoteSigned", "-NoProfileLoadTime" }
+Config.default_prog = { "pwsh" }
 
-  Config.launch_menu = {
-    {
-      label = icons.Pwsh .. " PowerShell V7",
-      args = {
-        "pwsh",
-        "-NoLogo",
-        "-ExecutionPolicy",
-        "RemoteSigned",
-        "-NoProfileLoadTime",
-      },
-      cwd = "~",
+Config.launch_menu = {
+  {
+    label = icons.Pwsh .. " PowerShell V7",
+    args = {
+      "pwsh",
+      "-NoLogo",
+      "-ExecutionPolicy",
+      "RemoteSigned",
+      "-NoProfileLoadTime",
     },
-    { label = icons.Pwsh .. " PowerShell V5", args = { "powershell" }, cwd = "~" },
-    { label = "Command Prompt", args = { "cmd.exe" }, cwd = "~" },
-    { label = icons.Git .. " Git bash", args = { "sh", "-l" }, cwd = "~" },
-  }
+    cwd = "~",
+  },
+  { label = icons.Git .. " Git bash", args = { "sh", "-l" }, cwd = "~" },
+  { label = "Command Prompt", args = { "cmd.exe" }, cwd = "~" },
+}
 
-  -- ref: https://wezfurlong.org/wezterm/config/lua/WslDomain.html
-  Config.wsl_domains = {
-    {
-      name = "WSL:Ubuntu",
-      distribution = "Ubuntu",
-      username = "sravioli",
-      default_cwd = "/home/sRavioli",
-      default_prog = { "bash" },
-    },
-    {
-      name = "WSL:Alpine",
-      distribution = "Alpine",
-      username = "sravioli",
-      default_cwd = "/home/sravioli",
-    },
-  }
-end
+-- ref: https://wezfurlong.org/wezterm/config/lua/WslDomain.html
+Config.wsl_domains = {}
 
 Config.default_cwd = fun.home
 

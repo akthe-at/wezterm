@@ -29,8 +29,8 @@ Config.command_palette_rows = 20
 ---cursor
 Config.cursor_blink_ease_in = "EaseIn"
 Config.cursor_blink_ease_out = "EaseOut"
-Config.cursor_blink_rate = 500
-Config.default_cursor_style = "BlinkingUnderline"
+Config.cursor_blink_rate = 700
+Config.default_cursor_style = "SteadyBlock"
 Config.cursor_thickness = 1
 Config.force_reverse_video_cursor = true
 
@@ -56,7 +56,7 @@ Config.visual_bell = {
 }
 
 ---window appearance
-Config.window_padding = { left = 2, right = 2, top = 2, bottom = 1 }
+Config.window_padding = { left = 5, right = 5, top = 12, bottom = 5 }
 Config.window_decorations = "RESIZE"
 Config.integrated_title_button_alignment = "Right"
 Config.integrated_title_button_style = "Windows"
@@ -68,11 +68,6 @@ Config.exit_behavior = "CloseOnCleanExit"
 Config.exit_behavior_messaging = "Verbose"
 Config.skip_close_confirmation_for_processes_named = {
   "bash",
-  "sh",
-  "zsh",
-  "fish",
-  "tmux",
-  "nu",
   "cmd.exe",
   "pwsh.exe",
   "powershell.exe",

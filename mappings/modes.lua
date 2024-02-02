@@ -68,8 +68,8 @@ local key_tables = {
 
   -- {{{1 FONT MODE (font_mode)
   font_mode = {
-    ["+"] = act.IncreaseFontSize,
-    ["-"] = act.DecreaseFontSize,
+    ["<leader>k"] = act.IncreaseFontSize,
+    ["<leader>j"] = act.DecreaseFontSize,
     ["0"] = act.ResetFontSize,
   }, -- }}}
 

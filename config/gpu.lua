@@ -6,12 +6,12 @@ Config.webgpu_force_fallback_adapter = false
 Config.webgpu_power_preference = "HighPerformance"
 Config.webgpu_preferred_adapter = {
   backend = "Vulkan",
-  device = 8081,
-  device_type = "DiscreteGpu",
-  driver = "NVIDIA",
-  driver_info = "537.58",
-  name = "NVIDIA GeForce GTX 1650 with Max-Q Design",
-  vendor = 4318,
+  device = 18088,
+  device_type = "IntegratedGpu",
+  driver = "Intel Corporation",
+  driver_info = "Intel driver",
+  name = "Intel(R) Iris(R) Xe Graphics",
+  vendor = 32902,
 }
 
 return Config

@@ -10,7 +10,7 @@ Config.anti_alias_custom_block_glyphs = true
 
 Config.font = wez.font_with_fallback {
   {
-    family = "FiraCode Nerd Font",
+    family = "Hack Nerd Font",
     weight = "Regular",
     harfbuzz_features = {
       -- "cv01", ---styles: a

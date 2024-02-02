@@ -1,5 +1,7 @@
 local act = require("wezterm").action
 local fun = require "utils.fun" ---@class Fun
+local wezterm = require "wezterm"
+local sessionizer = require "sessionizer"
 
 ---@class Config
 local Config = {}
@@ -14,8 +16,8 @@ local keys = {
   ["<C-S-c>"] = act.CopyTo "Clipboard",
   ["<C-S-v>"] = act.PasteFrom "Clipboard",
   ["<C-S-f>"] = act.Search "CurrentSelectionOrEmptyString",
-  ["<C-S-k>"] = act.ClearScrollback "ScrollbackOnly",
-  ["<C-S-l>"] = act.ShowDebugOverlay,
+  ["<leader>k"] = act.ClearScrollback "ScrollbackOnly",
+  ["<F12>"] = act.ShowDebugOverlay,
   ["<C-S-n>"] = act.SpawnWindow,
   ["<C-S-p>"] = act.ActivateCommandPalette,
   ["<C-S-r>"] = act.ReloadConfiguration,
@@ -35,20 +37,33 @@ local keys = {
   ---quick split and nav
   ['<C-S-">'] = act.SplitHorizontal { domain = "CurrentPaneDomain" },
   ["<C-S-%>"] = act.SplitVertical { domain = "CurrentPaneDomain" },
-  ["<C-M-h>"] = act.ActivatePaneDirection "Left",
-  ["<C-M-j>"] = act.ActivatePaneDirection "Down",
-  ["<C-M-k>"] = act.ActivatePaneDirection "Up",
-  ["<C-M-l>"] = act.ActivatePaneDirection "Right",
+  ["<C-S-h>"] = act.ActivatePaneDirection "Left",
+  ["<C-S-j>"] = act.ActivatePaneDirection "Down",
+  ["<C-S-k>"] = act.ActivatePaneDirection "Up",
+  ["<C-S-l>"] = act.ActivatePaneDirection "Right",
 
   ---key tables
   ["<leader>w"] = act.ActivateKeyTable { name = "window_mode", one_shot = false },
   ["<leader>f"] = act.ActivateKeyTable { name = "font_mode", one_shot = false },
   ["<leader>c"] = act.ActivateCopyMode,
   ["<leader>s"] = act.Search "CurrentSelectionOrEmptyString",
+
+  --custom keys
+  --Rename Workspace
+  ["<leader>R"] = act.PromptInputLine {
+    description = "Enter new name for workspace",
+    action = wezterm.action_callback(function(_, _, line)
+      if line then
+        wezterm.mux.rename_workspace(wezterm.mux.get_active_workspace(), line)
+      end
+    end),
+  },
+  ["<leader>m"] = wezterm.action_callback(sessionizer.toggle),
+  ["<leader>\\"] = act.SendString "\\",
 }
 
-for i = 1, 10 do
-  keys["<S-F" .. i .. ">"] = act.ActivateTab(i - 1)
+for i = 1, 9 do
+  keys["<leader>" .. i .. ""] = act.ActivateTab(i - 1)
 end
 
 Config.keys = {}
