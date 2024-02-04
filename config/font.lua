@@ -1,5 +1,6 @@
 ---@class WezTerm
 local wez = require "wezterm"
+local platform = require "utils.platform"
 
 ---@class Config
 local Config = {}
@@ -51,11 +52,7 @@ Config.font = wez.font_with_fallback {
   { family = "LegacyComputing" },
 }
 
-if require("utils.fun").is_windows then
-  Config.font_size = 9.5
-else
-  Config.font_size = 10.5
-end
+Config.font_size = 11
 
 Config.underline_position = -2.5
 Config.underline_thickness = "2px"
