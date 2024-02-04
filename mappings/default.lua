@@ -2,32 +2,37 @@ local act = require("wezterm").action
 local fun = require "utils.fun" ---@class Fun
 local wezterm = require "wezterm"
 local sessionizer = require "sessionizer"
+local backdrops = require "utils.backdrops"
 
 ---@class Config
 local Config = {}
-
 Config.disable_default_key_bindings = true
-Config.leader = { key = "\\", mods = "ALT", timeout_milliseconds = 1000 }
+Config.leader = { key = "a", mods = "CTRL", timeout_milliseconds = 1000 }
 
 local keys = {
-  ["<C-Tab>"] = act.ActivateTabRelative(1),
-  ["<C-S-Tab>"] = act.ActivateTabRelative(-1),
+  ["<M-[>"] = act.ActivateTabRelative(1),
+  ["<M-]>"] = act.ActivateTabRelative(-1),
+  ["<C-M-[>"] = act.MoveTabRelative(1),
+  ["<C-M-]>"] = act.MoveTabRelative(-1),
+  ["F4"] = act.ShowLauncherArgs { flags = "FUZZY|TABS" },
+  ["F5"] = act.ShowLauncherArgs { flags = "FUZZY|WORKSPACES" },
+  ["<F12>"] = act.ShowDebugOverlay,
   ["<M-CR>"] = act.ToggleFullScreen,
   ["<C-S-c>"] = act.CopyTo "Clipboard",
   ["<C-S-v>"] = act.PasteFrom "Clipboard",
   ["<C-S-f>"] = act.Search "CurrentSelectionOrEmptyString",
-  ["<leader>k"] = act.ClearScrollback "ScrollbackOnly",
-  ["<F12>"] = act.ShowDebugOverlay,
+  ["<leader>K"] = act.ClearScrollback "ScrollbackOnly",
   ["<C-S-n>"] = act.SpawnWindow,
   ["<C-S-p>"] = act.ActivateCommandPalette,
   ["<C-S-r>"] = act.ReloadConfiguration,
   ["<C-S-t>"] = act.SpawnTab "CurrentPaneDomain",
+  ["<C-S-w>"] = act.CloseCurrentTab { confirm = true },
   ["<C-S-u>"] = act.CharSelect {
     copy_on_select = true,
     copy_to = "ClipboardAndPrimarySelection",
   },
-  ["<C-S-w>"] = act.CloseCurrentTab { confirm = true },
   ["<C-S-z>"] = act.TogglePaneZoomState,
+  ["<leader>W"] = act.CloseCurrentPane { confirm = true },
   ["<PageUp>"] = act.ScrollByPage(-1),
   ["<PageDown>"] = act.ScrollByPage(1),
   ["<C-S-Insert>"] = act.PasteFrom "PrimarySelection",
@@ -35,12 +40,12 @@ local keys = {
   ["<C-S-Space>"] = act.QuickSelect,
 
   ---quick split and nav
-  ['<C-S-">'] = act.SplitHorizontal { domain = "CurrentPaneDomain" },
-  ["<C-S-%>"] = act.SplitVertical { domain = "CurrentPaneDomain" },
-  ["<C-S-h>"] = act.ActivatePaneDirection "Left",
-  ["<C-S-j>"] = act.ActivatePaneDirection "Down",
-  ["<C-S-k>"] = act.ActivatePaneDirection "Up",
-  ["<C-S-l>"] = act.ActivatePaneDirection "Right",
+  ["<leader>\\"] = act.SplitHorizontal { domain = "CurrentPaneDomain" },
+  ["<leader>-"] = act.SplitVertical { domain = "CurrentPaneDomain" },
+  ["<leader>h"] = act.ActivatePaneDirection "Left",
+  ["<leader>j"] = act.ActivatePaneDirection "Down",
+  ["<leader>k"] = act.ActivatePaneDirection "Up",
+  ["<leader>l"] = act.ActivatePaneDirection "Right",
 
   ---key tables
   ["<leader>w"] = act.ActivateKeyTable { name = "window_mode", one_shot = false },
@@ -49,6 +54,21 @@ local keys = {
   ["<leader>s"] = act.Search "CurrentSelectionOrEmptyString",
 
   --custom keys
+  --rename Tab
+  ["<leader>r"] = act.PromptInputLine {
+    description = "Enter new name for Tab",
+    action = wezterm.action_callback(function(_, tab, line)
+      if line then
+        wezterm.custom_tab_titles[tab.id] = line
+        print(_)
+        print(tab)
+        print(line)
+      end
+    end),
+  },
+  -- Navigate Workspace
+  ["<leader>n"] = act.SwitchWorkspaceRelative(1),
+  ["<leader>p"] = act.SwitchWorkspaceRelative(-1),
   --Rename Workspace
   ["<leader>R"] = act.PromptInputLine {
     description = "Enter new name for workspace",
@@ -59,7 +79,20 @@ local keys = {
     end),
   },
   ["<leader>m"] = wezterm.action_callback(sessionizer.toggle),
-  ["<leader>\\"] = act.SendString "\\",
+  ---Custom Backdrops---
+  ["<M-/>"] = wezterm.action_callback(function(window, _)
+    backdrops:random(window)
+  end),
+  ["<leader>/"] = act.InputSelector {
+    title = "Select Background",
+    choices = backdrops:choices(),
+    fuzzy = true,
+    fuzzy_description = "Select Background: ",
+    action = wezterm.action_callback(function(window, _pane, idx)
+      ---@diagnostic disable-next-line: param-type-mismatch
+      backdrops:set_img(window, tonumber(idx))
+    end),
+  },
 }
 
 for i = 1, 9 do
