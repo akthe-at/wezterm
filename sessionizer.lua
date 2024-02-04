@@ -7,18 +7,18 @@ local M = {}
 
 local fd =
   "C:/Users/ARK010/AppData/Local/Microsoft/WinGet/Packages/sharkdp.fd_Microsoft.Winget.Source_8wekyb3d8bbwe/fd-v8.7.1-x86_64-pc-windows-msvc/fd.exe"
-local rootPath = wezterm.home_dir .. "/Documents"
+local rootPath = "C:/Users/ARK010/Documents/"
 
 M.toggle = function(window, pane)
   local projects = {}
 
   local success, stdout, stderr = wezterm.run_child_process {
     fd,
-    "-H",
-    "-I",
+    "-HI",
     "-td",
-    "--max-depth=3",
     "^.git$",
+    "--max-depth=5",
+    "--prune",
     rootPath,
   }
 
@@ -28,21 +28,22 @@ M.toggle = function(window, pane)
   end
 
   for line in stdout:gmatch "([^\n]*)\n?" do
-    local project = line:gsub("\\.git\\$", "")
+    local project = line:gsub("\\%.git\\$", "")
     local label = project
-    local id = project:gsub(".*\\", "")
+    local id = project
 
     --handle git bare repo
-    if string.match(project, "%.git\\$") then
+    if string.match(project, "%.git/$") then
       wezterm.log_info("found .git " .. tostring(project))
       local success, stdout, stderr = wezterm.run_child_process {
         fd,
         "-H",
         "-I",
         "-td",
-        "--max-depth=3",
+        "--max-depth=4",
+        "--prune",
         ".",
-        project .. "\\worktrees\\",
+        project .. "\\worktrees",
       }
       if success then
         for wt_line in stdout:gmatch "([^\n]*)\n?" do
