@@ -23,7 +23,7 @@ local mocha = {
   surface2 = "#585b70",
   surface1 = "#45475a",
   surface0 = "#313244",
-  base = "#1f1f28",
+  base = "#1E1D23",
   mantle = "#181825",
   crust = "#11111b",
 }
@@ -41,7 +41,7 @@ local colorscheme = {
     "#C50F1F", -- red
     "#13A10E", -- green
     "#C19C00", -- yellow
-    "#0037DA", -- blue
+    "#7E9CD8", -- blue
     "#881798", -- magenta/purple
     "#3A96DD", -- cyan
     "#CCCCCC", -- white
@@ -63,20 +63,22 @@ local colorscheme = {
       fg_color = mocha.text,
     },
     inactive_tab = {
-      bg_color = mocha.surface0,
-      fg_color = mocha.subtext1,
+      bg_color = "#727169",
+      fg_color = "#181820",
     },
+
     inactive_tab_hover = {
-      bg_color = mocha.surface0,
-      fg_color = mocha.text,
+      bg_color = "#223249",
+      fg_color = "#727169",
+      italic = true,
     },
     new_tab = {
-      bg_color = mocha.base,
-      fg_color = mocha.text,
+      bg_color = "#727169",
+      fg_color = "#181820",
     },
     new_tab_hover = {
-      bg_color = mocha.mantle,
-      fg_color = mocha.text,
+      bg_color = "#9CABCA",
+      fg_color = "#181820",
       italic = true,
     },
   },
@@ -88,6 +90,15 @@ local colorscheme = {
   scrollbar_thumb = mocha.surface2,
   split = mocha.overlay0,
   compose_cursor = mocha.flamingo, -- nightbuild only
+  copy_mode_active_highlight_bg = { Color = "#223249" },
+  copy_mode_active_highlight_fg = { Color = "#DCD7BA" },
+  copy_mode_inactive_highlight_bg = { Color = "#C8C093" },
+  copy_mode_inactive_highlight_fg = { Color = "#16161D" },
+
+  quick_select_label_bg = { Color = "#FF5D62" },
+  quick_select_label_fg = { Color = "#DCD7BA" },
+  quick_select_match_bg = { Color = "#FF9E3B" },
+  quick_select_match_fg = { Color = "#DCD7BA" },
 }
 
 return colorscheme

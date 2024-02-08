@@ -11,7 +11,7 @@ Config.anti_alias_custom_block_glyphs = true
 
 Config.font = wez.font_with_fallback {
   {
-    family = "Hack Nerd Font",
+    family = "JetBrainsMono Nerd Font",
     weight = "Regular",
     harfbuzz_features = {
       -- "cv01", ---styles: a
@@ -52,7 +52,7 @@ Config.font = wez.font_with_fallback {
   { family = "LegacyComputing" },
 }
 
-Config.font_size = 11
+Config.font_size = 12
 
 Config.underline_position = -2.5
 Config.underline_thickness = "2px"
