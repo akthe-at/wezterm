@@ -7,7 +7,7 @@ local fun = require "utils.fun" ---@class Fun
 ---@class Config
 local Config = {}
 
-Config.default_prog = { "pwsh" }
+Config.default_prog = { "bash", "-l" }
 
 Config.launch_menu = {
   {
@@ -21,7 +21,7 @@ Config.launch_menu = {
     },
     cwd = "~",
   },
-  { label = icons.Git .. " Git bash", args = { "sh", "-l" }, cwd = "~" },
+  { label = icons.Git .. " Git bash", args = { "bash", "-l" }, cwd = "~" },
   { label = "Command Prompt", args = { "cmd.exe" }, cwd = "~" },
 }
 
