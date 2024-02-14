@@ -1,26 +1,109 @@
 -- ~.config/wezterm/sessionizer.lua
 
 local wezterm = require "wezterm"
+local platform = require "utils/platform"
 local act = wezterm.action
 
 local M = {}
 
-local fd =
-  "C:/Users/ARK010/AppData/Local/Microsoft/WinGet/Packages/sharkdp.fd_Microsoft.Winget.Source_8wekyb3d8bbwe/fd-v8.7.1-x86_64-pc-windows-msvc/fd.exe"
-local rootPath = "C:/Users/ARK010/Documents/"
+--- Converts Windows backslash to forwardslash
+---@param path string
+local function normalize_path(path)
+  return platform.is_win and path:gsub("\\", "/") or path
+end
 
-M.toggle = function(window, pane)
+local home = normalize_path "C:/Users/ARK010/"
+
+--- If name nil or false print err_message
+---@param name string|boolean|nil
+---@param err_message string
+local function err_if_not(name, err_message)
+  if not name then
+    wezterm.log_error(err_message)
+  end
+end
+--
+--- path if file or directory exists nil otherwise
+---@param path string
+local function file_exists(path)
+  if path == nil then
+    return nil
+  end
+  local f = io.open(path, "r")
+  -- io.open won't work to check if directories exist,
+  -- but works for symlinks and regular files
+  if f ~= nil then
+    wezterm.log_info(path .. " file or symlink found")
+    io.close(f)
+    return path
+  end
+  return nil
+end
+
+-------------------------------------------------------
+-- PATHS
+--
+local fd = (
+  file_exists(home .. "/bin/fd")
+  or file_exists "usr/bin/fd"
+  or file_exists(home .. "/bin/fd.exe")
+  or file_exists "C:\\Users\\ARK010\\AppData\\Local\\Microsoft\\WinGet\\Packages\\sharkdp.fd_Microsoft.Winget.Source_8wekyb3d8bbwe\\fd-v8.7.1-x86_64-pc-windows-msvc\\fd.exe"
+)
+err_if_not(fd, "fd not found")
+
+local git = (
+  file_exists "C:/Users/ARK010/scoop/apps/git/2.43.0/bin/git.exe"
+  or file_exists "/usr/bin/git"
+)
+err_if_not(git, "git not found")
+
+local srcPath = home .. "/Documents"
+err_if_not(srcPath, srcPath .. " not found")
+
+local search_folders = {
+  srcPath,
+  srcPath .. "/DEM",
+  -- srcPath .. "/other",
+}
+-------------------------------------------------------
+
+--- Merge numeric tables
+---@param t1 table
+---@param t2 table
+---@return table
+local function merge_tables(t1, t2)
+  local result = {}
+  for index, value in ipairs(t1) do
+    result[index] = value
+  end
+  for index, value in ipairs(t2) do
+    result[#t1 + index] = value
+  end
+  return result
+end
+
+M.start = function(window, pane)
   local projects = {}
 
-  local success, stdout, stderr = wezterm.run_child_process {
-    fd,
-    "-HI",
-    "-td",
-    "^.git$",
-    "--max-depth=5",
-    "--prune",
-    rootPath,
-  }
+  -- assumes  ~/src/www, ~/src/work to exist
+  -- ~/src
+  --  ├──nushell-config       # toplevel config stuff
+  --  ├──wezterm-config
+  --  ├──work                    # work stuff
+  --    ├──work/project.git      # git bare clones marked with .git at the end
+  --    ├──work/project-bugfix   # worktree of project.git
+  --    ├──work/project-feature  # worktree of project.git
+  --  │ └───31 unlisted
+  --  └──other                # 3rd party project
+  --     └──103 unlisted
+  local cmd = merge_tables({ fd, "-HI", "-td", "--max-depth=1", "." }, search_folders)
+  wezterm.log_info "cmd: "
+  wezterm.log_info(cmd)
+
+  for _, value in ipairs(cmd) do
+    wezterm.log_info(value)
+  end
+  local success, stdout, stderr = wezterm.run_child_process(cmd)
 
   if not success then
     wezterm.log_error("Failed to run fd: " .. stderr)
@@ -28,35 +111,9 @@ M.toggle = function(window, pane)
   end
 
   for line in stdout:gmatch "([^\n]*)\n?" do
-    local project = line:gsub("\\%.git\\$", "")
+    local project = normalize_path(line)
     local label = project
     local id = project
-
-    --handle git bare repo
-    if string.match(project, "%.git/$") then
-      wezterm.log_info("found .git " .. tostring(project))
-      local success, stdout, stderr = wezterm.run_child_process {
-        fd,
-        "-H",
-        "-I",
-        "-td",
-        "--max-depth=4",
-        "--prune",
-        ".",
-        project .. "\\worktrees",
-      }
-      if success then
-        for wt_line in stdout:gmatch "([^\n]*)\n?" do
-          local wt_project = wt_line:gsub("\\", "/")
-          local wt_label = wt_project
-          local wt_id = wt_project
-          table.insert(projects, { label = tostring(wt_label), id = tostring(wt_id) })
-        end
-      else
-        wezterm.log_error("Failed to run fd: " .. stderr)
-      end
-    end
-
     table.insert(projects, { label = tostring(label), id = tostring(id) })
   end
 
