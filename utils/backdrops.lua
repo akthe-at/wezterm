@@ -1,5 +1,5 @@
 local wezterm = require "wezterm"
-local platform = require "utils.platform"()
+local platform = require "utils.platform"
 local colors = require "colors.custom"
 
 -- Seeding random numbers before generating for use
