@@ -78,7 +78,7 @@ local keys = {
       end
     end),
   },
-  ["<leader>m"] = wezterm.action_callback(sessionizer.toggle),
+  ["<leader>m"] = wezterm.action_callback(sessionizer.start),
   ---Custom Backdrops---
   ["<M-/>"] = wezterm.action_callback(function(window, _)
     backdrops:random(window)
@@ -92,6 +92,14 @@ local keys = {
       ---@diagnostic disable-next-line: param-type-mismatch
       backdrops:set_img(window, tonumber(idx))
     end),
+  },
+  -- Open Wezterm Config Directly
+  ["<leader>,"] = wezterm.action.SpawnCommandInNewTab {
+    cwd = os.getenv "WEZTERM_CONFIG_DIR",
+    args = {
+      "C:/Users/ARK010/scoop/shims/nvim.exe",
+      os.getenv "WEZTERM_CONFIG_FILE",
+    },
   },
 }
 
