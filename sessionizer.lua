@@ -47,12 +47,12 @@ local fd = (
   file_exists(home .. "/bin/fd")
   or file_exists "usr/bin/fd"
   or file_exists(home .. "/bin/fd.exe")
-  or file_exists "C:\\Users\\ARK010\\AppData\\Local\\Microsoft\\WinGet\\Packages\\sharkdp.fd_Microsoft.Winget.Source_8wekyb3d8bbwe\\fd-v8.7.1-x86_64-pc-windows-msvc\\fd.exe"
+  or file_exists "C:\\Users\\ARK010\\scoop\\shims\\fd.exe"
 )
 err_if_not(fd, "fd not found")
 
 local git = (
-  file_exists "C:/Users/ARK010/scoop/apps/git/2.43.0/bin/git.exe"
+  file_exists "C:/Users/ARK010/scoop/apps/git/current/bin/git.exe"
   or file_exists "/usr/bin/git"
 )
 err_if_not(git, "git not found")

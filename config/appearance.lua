@@ -8,34 +8,33 @@ Config.color_scheme = scheme
 
 Config.background = {
   {
-    source = { Color = theme.background },
+    source = { Color = theme.background }, -- },"#000000"
     width = "100%",
     height = "100%",
   },
 }
-
+--
 Config.bold_brightens_ansi_colors = "BrightAndBold"
 
 ---char select and command palette
-Config.char_select_bg_color = theme.brights[6]
+Config.char_select_bg_color = theme.brights[5]
 Config.char_select_fg_color = theme.background
 Config.char_select_font_size = 12
 
-Config.command_palette_bg_color = theme.brights[6]
+Config.command_palette_bg_color = theme.brights[5]
 Config.command_palette_fg_color = theme.background
 Config.command_palette_font_size = 14
 Config.command_palette_rows = 20
 
 ---cursor
-Config.cursor_blink_ease_in = "EaseIn"
-Config.cursor_blink_ease_out = "EaseOut"
-Config.cursor_blink_rate = 700
+-- Config.cursor_blink_ease_in = "EaseIn"
+-- Config.cursor_blink_ease_out = "EaseOut"
+-- Config.cursor_blink_rate = 700
 Config.default_cursor_style = "SteadyBlock"
-Config.cursor_thickness = 1
+Config.cursor_thickness = 2
 Config.force_reverse_video_cursor = true
 
-Config.enable_scroll_bar = true
-
+Config.enable_scroll_bar = false
 Config.hide_mouse_cursor_when_typing = true
 
 ---text blink
@@ -47,7 +46,7 @@ Config.text_blink_rate = 500
 Config.text_blink_rate_rapid = 250
 
 ---visual bell
-Config.audible_bell = "SystemBeep"
+Config.audible_bell = "Disabled"
 Config.visual_bell = {
   fade_in_function = "EaseOut",
   fade_in_duration_ms = 200,
@@ -56,7 +55,7 @@ Config.visual_bell = {
 }
 
 ---window appearance
-Config.window_padding = { left = 1, right = 1, top = 1, bottom = 1 }
+Config.window_padding = { left = 2, right = 2, top = 2, bottom = 1 }
 Config.window_decorations = "RESIZE"
 Config.integrated_title_button_alignment = "Right"
 Config.integrated_title_button_style = "Windows"

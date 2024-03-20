@@ -7,21 +7,26 @@ local fun = require "utils.fun" ---@class Fun
 ---@class Config
 local Config = {}
 
-Config.default_prog = { "bash", "-l" }
+Config.default_prog = { "pwsh.exe" }
+
+--Config.default_prog = { "C:/Users/ARK010/scoop/apps/git/current/bin/bash.exe", "-l" }
 
 Config.launch_menu = {
   {
     label = icons.Pwsh .. " PowerShell V7",
     args = {
-      "pwsh",
+      "pwsh.exe",
       "-NoLogo",
       "-ExecutionPolicy",
       "RemoteSigned",
-      "-NoProfileLoadTime",
     },
     cwd = "~",
   },
-  { label = icons.Git .. " Git bash", args = { "bash", "-l" }, cwd = "~" },
+  {
+    label = icons.Git .. " Git bash",
+    args = { "C:/Users/ARK010/scoop/apps/git/current/bin/bash.exe", "-l" },
+    cwd = "~",
+  },
   { label = "Command Prompt", args = { "cmd.exe" }, cwd = "~" },
 }
 

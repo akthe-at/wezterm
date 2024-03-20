@@ -157,12 +157,12 @@ M.tbl_merge = function(t1, ...)
 end
 
 ---Returns the colorscheme name absed on the system appearance
----@return '"kanagawa-wave"'|'"kanagawa-lotus"| "mod-cap"' colorscheme name of the colorscheme
+---@return '"kanagawa-wave"'|'"mod-cap"'|'"rose-pine"' | '"kanagawa-dragon"' -- colorscheme name of the colorscheme
 M.get_scheme = function()
   if (wez.gui and wez.gui.get_appearance() or "Dark"):find "Dark" then
-    return "kanagawa-dragon"
+    return "mod-cap" --"kanagawa-wave"
   end
-  return "mod-cap"
+  return "rose-pine" --"mod-cap"
 end
 
 M.gsplit = function(s, sep, opts)

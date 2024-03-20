@@ -27,7 +27,7 @@ wez.on("update-status", function(window, pane)
   if name and modes[name] then
     local txt = modes[name].text or ""
     mode_indicator_width, bg = strwidth(txt), modes[name].bg
-    LeftStatus:push(bg, theme.background, txt, { "Bold" })
+    LeftStatus:push(bg, theme.background, txt, { "SemiBold" })
   end
 
   window:set_left_status(wez.format(LeftStatus))
@@ -50,6 +50,7 @@ wez.on("update-status", function(window, pane)
   local datetime = wez.strftime "%a %b %-d %H:%M"
   local cwd, _ = fun.get_cwd_hostname(pane, true) -- current hostname turned to _ because unused.
   local workspace_name = window:active_workspace()
+
   --~ {{{2 Calculate the used width by the tabs
   local MuxWindow = window:mux_window()
   local tab_bar_width = 0
@@ -82,7 +83,7 @@ wez.on("update-status", function(window, pane)
 
     ---add cell or empty string
     cell = usable_width <= 0 and " " or " " .. cell .. " "
-    RightStatus:push(colors[i], theme.tab_bar.background, cell, { "Bold" })
+    RightStatus:push(colors[i], theme.tab_bar.background, cell, { "SemiBold" })
   end
 
   window:set_right_status(wez.format(RightStatus))

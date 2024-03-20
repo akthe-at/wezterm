@@ -3,5 +3,6 @@ return {
   ["kanagawa-dragon"] = require "colors.kanagawa-dragon",
   ["kanagawa-lotus"] = require "colors.kanagawa-lotus",
   ["mod-cap"] = require "colors.custom",
+  ["rose-pine"] = require "colors.rosepine",
 }
 

@@ -1,6 +1,6 @@
 local wezterm = require "wezterm"
 
-local M = {}
+-- local M = {}
 
 return {
   is_win = string.find(wezterm.target_triple, "windows") ~= nil,

@@ -11,8 +11,8 @@ Config.front_end = "OpenGL"
 --   driver = "Intel Corporation",
 --   driver_info = "Intel driver",
 --   name = "Intel(R) Iris(R) Xe Graphics",
---   vendor = 32902,
+-- --   vendor = 32902,
 -- }
---
+-- --
 return Config
 
