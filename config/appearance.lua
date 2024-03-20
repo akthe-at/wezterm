@@ -13,6 +13,12 @@ Config.background = {
     height = "100%",
   },
 }
+
+Config.inactive_pane_hsb = {
+  saturation = 0.6,
+  brightness = 0.6,
+}
+
 --
 Config.bold_brightens_ansi_colors = "BrightAndBold"
 
