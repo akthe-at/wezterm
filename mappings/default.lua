@@ -52,6 +52,9 @@ local keys = {
   ["<leader>f"] = act.ActivateKeyTable { name = "font_mode", one_shot = false },
   ["<leader>c"] = act.ActivateCopyMode,
   ["<leader>s"] = act.Search "CurrentSelectionOrEmptyString",
+  ["<leader>q"] = wezterm.action { EmitEvent = "save_session" },
+  ["<leader>L"] = wezterm.action { EmitEvent = "load_session" },
+  ["<leader>P"] = wezterm.action { EmitEvent = "restore_session" },
 
   --custom keys
   --rename Tab

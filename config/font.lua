@@ -12,7 +12,7 @@ Config.anti_alias_custom_block_glyphs = true
 Config.font = wez.font_with_fallback {
   {
     family = "ComicShannsMono Nerd Font",
-    weight = "Regular",
+    weight = "Medium",
     harfbuzz_features = {
       -- "cv01", ---styles: a
       -- "cv02", ---styles: g
@@ -52,10 +52,11 @@ Config.font = wez.font_with_fallback {
   { family = "LegacyComputing" },
 }
 
-Config.font_size = 12.5
-
-Config.underline_position = -2.5
-Config.underline_thickness = 2
+Config.font_size = 11
+Config.cell_width = 0.9
+Config.line_height = 1.2
+Config.underline_position = -6
+Config.underline_thickness = "250%"
 Config.warn_about_missing_glyphs = false
 
 local monaspace_features =
@@ -67,9 +68,9 @@ Config.font_rules = {
     italic = true,
     font = wez.font_with_fallback {
       {
-        family = "ComicShannsMono Nerd Font Mono", --"Monaspace Radon Var",
+        family = "ComicShannsMono Nerd Font", --"Monaspace Radon Var",
         style = "Normal",
-        weight = "Regular",
+        weight = "Medium",
         stretch = "Expanded",
         harfbuzz_features = monaspace_features,
       },

@@ -2,7 +2,8 @@ return {
   ["kanagawa-wave"] = require "colors.kanagawa-wave",
   ["kanagawa-dragon"] = require "colors.kanagawa-dragon",
   ["kanagawa-lotus"] = require "colors.kanagawa-lotus",
-  ["mod-cap"] = require "colors.custom",
-  ["rose-pine"] = require "colors.rosepine",
+  ["custom"] = require "colors.custom",
+  ["rosepine"] = require "colors.rosepine",
+  ["dracula"] = require "colors.dracula",
 }
 

@@ -27,7 +27,7 @@ wez.on("update-status", function(window, pane)
   if name and modes[name] then
     local txt = modes[name].text or ""
     mode_indicator_width, bg = strwidth(txt), modes[name].bg
-    LeftStatus:push(bg, theme.background, txt, { "SemiBold" })
+    LeftStatus:push(bg, theme.background, txt, { "DemiBold" })
   end
 
   window:set_left_status(wez.format(LeftStatus))
@@ -39,8 +39,8 @@ wez.on("update-status", function(window, pane)
   bg = wez.color.parse(bg)
   local colors = { bg:darken(0.15), bg, bg:lighten(0.15), bg:lighten(0.25) }
 
-  local battery = wez.battery_info()[1]
-  battery.lvl = fun.toint(fun.mround(battery.state_of_charge * 100, 10))
+  -- local battery = wez.battery_info()[1]
+  -- battery.lvl = fun.toint(fun.mround(battery.state_of_charge * 100, 10))
   -- battery.ico = icons.Battery[battery.state][tostring(battery.lvl)]
   -- battery.ico,
   -- battery.full = ("%s %i%%"):format(
@@ -48,7 +48,7 @@ wez.on("update-status", function(window, pane)
   -- )
 
   local datetime = wez.strftime "%a %b %-d %H:%M"
-  local cwd, _ = fun.get_cwd_hostname(pane, true) -- current hostname turned to _ because unused.
+  local cwd, hostname = fun.get_cwd_hostname(pane, true) -- current hostname turned to _ because unused.
   local workspace_name = window:active_workspace()
 
   --~ {{{2 Calculate the used width by the tabs
@@ -71,7 +71,7 @@ wez.on("update-status", function(window, pane)
   local last_fg = Config.use_fancy_tab_bar and fancy_bg or theme.tab_bar.background
 
   ---push each cell and the cells separator
-  for i, cell in ipairs { cwd, workspace_name, datetime, battery.full } do
+  for i, cell in ipairs { cwd, hostname, workspace_name, datetime } do
     local cell_bg = colors[i]
     local cell_fg = i == 1 and last_fg or colors[i - 1]
     local sep = icons.Separators.StatusBar.right
@@ -83,7 +83,7 @@ wez.on("update-status", function(window, pane)
 
     ---add cell or empty string
     cell = usable_width <= 0 and " " or " " .. cell .. " "
-    RightStatus:push(colors[i], theme.tab_bar.background, cell, { "SemiBold" })
+    RightStatus:push(colors[i], theme.tab_bar.background, cell, { "DemiBold" })
   end
 
   window:set_right_status(wez.format(RightStatus))
