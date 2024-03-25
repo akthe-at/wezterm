@@ -1,6 +1,6 @@
 local main = {
   darklilac = "#6D5978",
-  lilac = "#BAA0E8",
+  lilac = "#bd93f9", --"#BAA0E8",
   mauve = "#cba6f7",
   red = "#eb6f92",
   maroon = "#eba0ac",
@@ -30,7 +30,7 @@ local main = {
   dracula_cursor_bg = "#f8f8f2",
   dracula_cursor_fg = "#282a36",
   dracula_cursor_border = "#f8f8f2",
-  split = "#6272a4",
+  split = "#50FA7b",
 }
 
 local colorscheme = {
@@ -39,8 +39,8 @@ local colorscheme = {
   cursor_bg = main.dracula_cursor_bg,
   cursor_border = main.dracula_cursor_border,
   cursor_fg = main.dracula_cursor_fg,
-  selection_bg = main.surface2,
-  selection_fg = "none",
+  selection_bg = "rgba(26.666668% 27.843138% 35.294117% 50%)",
+  selection_fg = "rgba(0% 0% 0% 0%)",
   ansi = {
     "#21222C",
     "#FF5555",
@@ -63,21 +63,25 @@ local colorscheme = {
   },
   tab_bar = {
     background = main.base,
-    inactive_tab_edge = main.black,
+    inactive_tab_edge = main.base,
     active_tab = {
       fg_color = main.lilac,
-      bg_color = main.black,
+      bg_color = main.base,
     },
 
     inactive_tab = {
-      bg_color = main.black,
-      fg_color = main.darklilac,
+      bg_color = main.base,
+      fg_color = main.dracula_foreground,
+      italic = true,
+      strikethrough = false,
+      underline = "None",
     },
 
     inactive_tab_hover = {
-      bg_color = main.black,
-      fg_color = main.text,
+      bg_color = main.dracula_cursor_border,
+      fg_color = main.base,
       italic = true,
+      strikethrough = false,
     },
 
     new_tab = {
@@ -87,8 +91,8 @@ local colorscheme = {
 
     new_tab_hover = {
       bg_color = main.surface2,
-      fg_color = main.black,
-      italic = true,
+      fg_color = main.base,
+      italic = false,
     },
   },
   visual_bell = main.surface0,
