@@ -3,6 +3,7 @@ local fun = require "utils.fun" ---@class Fun
 local wezterm = require "wezterm"
 local sessionizer = require "sessionizer"
 local backdrops = require "utils.backdrops"
+local session_manager = require "wezterm-session-manager/session-manager"
 
 ---@class Config
 local Config = {}
@@ -52,9 +53,9 @@ local keys = {
   ["<leader>f"] = act.ActivateKeyTable { name = "font_mode", one_shot = false },
   ["<leader>c"] = act.ActivateCopyMode,
   ["<leader>s"] = act.Search "CurrentSelectionOrEmptyString",
-  ["<leader>q"] = wezterm.action { EmitEvent = "save_session" },
-  ["<leader>L"] = wezterm.action { EmitEvent = "load_session" },
-  ["<leader>P"] = wezterm.action { EmitEvent = "restore_session" },
+  ["<leader>S"] = wezterm.action_callback(session_manager.save_state),
+  ["<leader>L"] = wezterm.action_callback(session_manager.load_state),
+  ["<leader>P"] = wezterm.action_callback(session_manager.restore_state),
 
   --custom keys
   --rename Tab
