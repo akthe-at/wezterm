@@ -85,6 +85,24 @@ local nf = require("wezterm").nerdfonts
 
 --~ }}}
 
+--~ {{{2 Icons.Clock
+---Indexed list of clock icons
+---@class Utils.Class.Icons.Clock: table<string: string>
+---@field ["00"] string `󱑊`
+---@field ["01"] string `󱐿`
+---@field ["02"] string `󱑀`
+---@field ["03"] string `󱑁`
+---@field ["04"] string `󱑂`
+---@field ["05"] string `󱑃`
+---@field ["06"] string `󱑄`
+---@field ["07"] string `󱑅`
+---@field ["08"] string `󱑆`
+---@field ["09"] string `󱑇`
+---@field ["10"] string `󱑈`
+---@field ["11"] string `󱑉`
+---@field ["12"] string `󱑊`
+--~ }}}
+
 --~ {{{2 Utils.Class.Icons
 
 ---@class Utils.Class.Icons
@@ -92,6 +110,10 @@ local nf = require("wezterm").nerdfonts
 ---@field Bat          Utils.Class.Icons.Bat
 ---@field Nums         Utils.Class.Icons.Nums
 ---@field Progs        Utils.Class.Icons.Progs
+---@field Clock        Utils.Class.Icons.Clock
+---@field Folder       string `󰉋`
+---@field Workspace    string `󰒘`
+---@field Hostname     string `󱄄`
 ---@field Notification string ``
 
 --~ }}}
@@ -102,6 +124,9 @@ local nf = require("wezterm").nerdfonts
 local M = {}
 
 M.Notification = nf.cod_circle_small_filled
+M.Workspace = nf.md_shield
+M.Folder = nf.md_folder
+M.Hostname = nf.md_monitor_shimmer
 
 M.Sep = {
   block = "█",
@@ -112,12 +137,41 @@ M.Sep = {
     modal = nf.ple_forwardslash_separator,
   },
 
+  ws = {
+    right = nf.ple_right_half_circle_thick,
+    left = nf.ple_left_half_circle_thick,
+  },
+
   tb = {
-    leftmost = "▐",
-    left = nf.ple_upper_right_triangle,
-    right = nf.ple_lower_left_triangle,
+    dev_terminal = "" .. nf.dev_terminal,
+    leftmost = "" .. nf.ple_left_half_circle_thick,
+    left = nf.ple_left_half_circle_thick,
+    right = nf.ple_right_half_circle_thick .. " ",
   },
 }
+
+-- M.Sep = {
+--   block = "█",
+--
+--   sb = {
+--     left = nf.ple_left_half_circle_thick,
+--     leftmost = "" .. nf.ple_left_half_circle_thick,
+--     rightmost = "" .. nf.ple_right_half_circle_thick,
+--     right = nf.ple_right_half_circle_thick,
+--     modal = nf.ple_forwardslash_separator,
+--   },
+--
+--   tb = {
+--     dev_terminal = "" .. nf.dev_terminal,
+--     leftmost = "" .. nf.ple_left_half_circle_thick,
+--     left = nf.ple_left_half_circle_thick,
+--     right = nf.ple_right_half_circle_thick .. " ",
+--   },
+--   ws = {
+--     right = nf.ple_right_half_circle_thick,
+--     left = nf.ple_left_half_circle_thick,
+--   },
+-- }
 
 M.Bat = {
   Full = {
@@ -166,24 +220,49 @@ M.Nums = {
   nf.md_numeric_10,
 }
 
+M.Status = {
+  folder = nf.md_folder,
+  user = nf.fa_user,
+  cod_server = nf.cod_server,
+  cal_clock = nf.md_calendar_clock,
+  charge = nf.md_lightning_bolt_circle,
+  domain = nf.oct_goal,
+}
+
+M.Clock = {
+  ["00"] = nf.md_clock_time_twelve,
+  ["01"] = nf.md_clock_time_one,
+  ["02"] = nf.md_clock_time_two,
+  ["03"] = nf.md_clock_time_three,
+  ["04"] = nf.md_clock_time_four,
+  ["05"] = nf.md_clock_time_five,
+  ["06"] = nf.md_clock_time_six,
+  ["07"] = nf.md_clock_time_seven,
+  ["08"] = nf.md_clock_time_eight,
+  ["09"] = nf.md_clock_time_nine,
+  ["10"] = nf.md_clock_time_ten,
+  ["11"] = nf.md_clock_time_eleven,
+  ["12"] = nf.md_clock_time_twelve,
+}
+
 M.Progs = {
   ["C:\\WINDOWS\\system32\\cmd.exe"] = nf.md_console_line,
-  ["Topgrade"] = nf.md_rocket_launch,
   ["bash"] = nf.cod_terminal_bash,
   ["btm"] = nf.md_chart_donut_variant,
+  ["btop"] = nf.md_chart_areaspline,
   ["cargo"] = nf.dev_rust,
   ["curl"] = nf.mdi_flattr,
-  ["docker"] = nf.linux_docker,
   ["docker-compose"] = nf.linux_docker,
+  ["docker"] = nf.linux_docker,
   ["fish"] = nf.md_fish,
   ["gh"] = nf.dev_github_badge,
   ["git"] = nf.dev_git,
   ["go"] = nf.seti_go,
   ["htop"] = nf.md_chart_areaspline,
-  ["btop"] = nf.md_chart_areaspline,
   ["kubectl"] = nf.linux_docker,
   ["kuberlr"] = nf.linux_docker,
   ["lazydocker"] = nf.linux_docker,
+  ["lazygit"] = nf.cod_github,
   ["lua"] = nf.seti_lua,
   ["python"] = nf.seti_python,
   ["perl"] = nf.seti_perl,
@@ -199,7 +278,6 @@ M.Progs = {
   ["vim"] = nf.dev_vim,
   ["wget"] = nf.mdi_arrow_down_box,
   ["zsh"] = nf.dev_terminal,
-  ["lazygit"] = nf.cod_github,
 }
 
 return M

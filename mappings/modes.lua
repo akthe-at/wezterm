@@ -1,4 +1,4 @@
----@module "mappings.modes"
+---@module "mappings.default"
 ---@author sravioli
 ---@license GNU-GPLv3
 
@@ -70,9 +70,9 @@ local key_tables = {
   -- {{{1 FONT MODE (font_mode)
   font_mode = {
     { "<ESC>", "PopKeyTable", "exit" },
-    { "+", act.IncreaseFontSize, "increase size" },
-    { "-", act.DecreaseFontSize, "decrease size" },
-    { "0", act.ResetFontSize, "reset size" },
+    { "j", act.IncreaseFontSize, "increase size" },
+    { "k", act.DecreaseFontSize, "decrease size" },
+    { "l", act.ResetFontSize, "reset size" },
   }, -- }}}
 
   -- {{{1 WINDOW MODE (window_mode)
@@ -98,7 +98,6 @@ local key_tables = {
     { "-", act.AdjustPaneSize { "Down", 2 }, "resize bot" },
   }, -- }}}
 
-  -- {{{1 HELP MODE (help_mode)
   help_mode = {
     { "<ESC>", "PopKeyTable", "exit" },
     { "<C-Tab>", act.ActivateTabRelative(1), "next tab" },
@@ -157,9 +156,10 @@ local key_tables = {
   pick_mode = {
     { "<ESC>", "PopKeyTable", "exit" },
     { "c", require("picker.colorscheme"):pick(), "colorscheme" },
+    { "s", require("picker.font-size"):pick(), "fontsize" },
     { "f", require("picker.font"):pick(), "font" },
-    { "s", require("picker.font-size"):pick(), "font size" },
-    { "l", require("picker.font-leading"):pick(), "line height" },
+    { "l", require("picker.font-leading"):pick(), "leading" },
+    -- { "p", require("picker.sessions"):pick(), "session picker" },
   }, -- }}}
 }
 
