@@ -1065,7 +1065,7 @@ end --~~}}}
 ---detected as "Dark," it returns `"kanagawa-wave"`.  Otherwise, it defaults to
 ---`"kanagawa-lotus"`.
 ---
----@return "kanagawa-wave"|"kanagawa-lotus" colorscheme
+---@return "kanagawa-wave"|"kanagawa-lotus"|"rose-pine-moon" colorscheme
 ---
 ---@usage
 ---~~~lua
@@ -1076,7 +1076,7 @@ end --~~}}}
 ---~~~
 M.color.get_scheme = function()
   if sfind((wt_gui and wt_gui.get_appearance() or ""), "Dark") then
-    return "kanagawa-wave"
+    return "rose-pine-moon"
   end
   return "kanagawa-lotus"
 end --~~}}}

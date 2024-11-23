@@ -1,57 +1,57 @@
 local Icons = require "utils.class.icon"
-local fs = require("utils.fn").fs
+local wezterm = require "wezterm"
 
 local Config = {}
-
-if fs.platform().is_win then
-  Config.default_prog =
-    { "pwsh", "-NoLogo", "-ExecutionPolicy", "RemoteSigned", "-NoProfileLoadTime" }
-
-  Config.launch_menu = {
-    {
-      label = Icons.Progs["pwsh.exe"] .. " PowerShell V7",
-      args = {
-        "pwsh",
-        "-NoLogo",
-        "-ExecutionPolicy",
-        "RemoteSigned",
-        "-NoProfileLoadTime",
-      },
-      cwd = "~",
-    },
-    {
-      label = Icons.Progs["pwsh.exe"] .. " PowerShell V5",
-      args = { "powershell" },
-      cwd = "~",
-    },
-    { label = "Command Prompt", args = { "cmd.exe" }, cwd = "~" },
-    { label = Icons.Progs["git"] .. " Git bash", args = { "sh", "-l" }, cwd = "~" },
-  }
-
-  -- ref: https://wezfurlong.org/wezterm/config/lua/WslDomain.html
-  Config.wsl_domains = {
-    {
-      name = "WSL:Ubuntu",
-      distribution = "Ubuntu",
-      username = "sravioli",
-      default_cwd = "~",
-      default_prog = { "bash", "-i", "-l" },
-    },
-    {
-      name = "WSL:Alpine",
-      distribution = "Alpine",
-      username = "sravioli",
-      default_cwd = "/home/sravioli",
-    },
-  }
+Config.ssh_domains = wezterm.default_ssh_domains()
+for _, dom in ipairs(Config.ssh_domains) do
+  dom.assume_shell = "Posix"
+  dom.multiplexing = "WezTerm"
 end
+-- Config.ssh_domains = {
+--   {
+--     name = "wsl:ssh",
+--     remote_address = "localhost:22",
+--     ssh_option = {
+--       identityfile = "C:\\Users\\aktheat\\.ssh\\id_ed25519.pub",
+--     },
+--     username = "aktheat",
+--     assume_shell = "Posix",
+--     multiplexing = "WezTerm",
+--   },
+-- }
+-- Config.default_domain = "SSHMUX:localhost"
+Config.default_domain = "WSL:Ubuntu-24.04"
+Config.default_prog = { "bash", "-l" }
+Config.launch_menu = {
+  {
+    label = Icons.Progs["pwsh.exe"] .. " PowerShell V7",
+    args = {
+      "pwsh",
+      "-NoLogo",
+      "-ExecutionPolicy",
+      "RemoteSigned",
+      "-NoProfileLoadTime",
+    },
+    cwd = "~",
+  },
+  { label = "Command Prompt", args = { "cmd.exe" }, cwd = "~" },
+  { label = "NuShell", args = { "nu.exe" }, cwd = "~" },
+  { label = Icons.Progs["git"] .. " Git bash", args = { "bash", "-l" }, cwd = "~" },
+}
+Config.set_environment_variables = {
+  WEZTERM_CONFIG_DIR = "c/Users/aktheat/.config/wezterm",
+}
+-- ref: https://wezfurlong.org/wezterm/config/lua/WslDomain.html
+Config.wsl_domains = {
+  {
+    name = "WSL:Ubuntu-24.04",
+    distribution = "Ubuntu-24.04",
+    username = "aktheat",
+    default_cwd = "~",
+    default_prog = { "bash" },
+  },
+}
 
-Config.default_cwd = fs.home()
-
--- ref: https://wezfurlong.org/wezterm/config/lua/SshDomain.html
-Config.ssh_domains = {}
-
--- ref: https://wezfurlong.org/wezterm/multiplexing.html#unix-domains
 Config.unix_domains = {}
 
 return Config

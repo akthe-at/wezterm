@@ -5,13 +5,15 @@ local fs = require("utils.fn").fs
 
 local Config = {}
 
+Config.font_size = 13
+Config.line_height = 1.0
 Config.adjust_window_size_when_changing_font_size = false
 Config.allow_square_glyphs_to_overflow_width = "WhenFollowedBySpace"
 Config.anti_alias_custom_block_glyphs = true
 
 Config.font = wt.font_with_fallback {
   {
-    family = "FiraCode Nerd Font",
+    family = "JetBrainsMono Nerd Font",
     weight = "Regular",
     harfbuzz_features = {
       -- "cv01", ---styles: a
@@ -52,12 +54,6 @@ Config.font = wt.font_with_fallback {
   { family = "LegacyComputing" },
 }
 
-if fs.platform().is_win then
-  Config.font_size = 9.5
-else
-  Config.font_size = 10.5
-end
-
 Config.underline_position = -2.5
 Config.underline_thickness = "2px"
 Config.warn_about_missing_glyphs = false
@@ -71,7 +67,7 @@ Config.font_rules = {
     italic = true,
     font = wt.font_with_fallback {
       {
-        family = "Monaspace Radon Var",
+        family = "Monaspace Radon",
         style = "Normal",
         weight = "Regular",
         stretch = "Normal",
@@ -85,9 +81,9 @@ Config.font_rules = {
     italic = true,
     font = wt.font_with_fallback {
       {
-        family = "Monaspace Krypton Var",
+        family = "Monaspace Krypton", --"Monaspace Krypton Var",
         style = "Italic",
-        weight = "Black",
+        weight = "DemiBold",
         harfbuzz_features = monaspace_features,
         scale = 1.1,
       },

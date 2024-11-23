@@ -23,7 +23,12 @@ wt.on("update-status", function(window, pane)
   local Config, Overrides = window:effective_config(), window:get_config_overrides() or {}
   local theme = Config.color_schemes[Overrides.color_scheme or Config.color_scheme]
 
-  --~ {{{2: Valid modes
+  -- local stat_bg = theme.ansi[1]
+  -- local sep_right = icon.Sep.sb.right
+  -- local sep_left = icon.Sep.sb.left
+  -- local stat_ico = icon.Status
+
+  --~ {{{2: Valid Modes
 
   local modes = {
     search_mode = { i = "󰍉", txt = "SEARCH", bg = theme.brights[4], pad = 5 },
@@ -50,20 +55,14 @@ wt.on("update-status", function(window, pane)
   local lsb = sb:new "LeftStatusBar"
 
   --~ {{{2: Modal indicator
-
   local mode = window:active_key_table()
   if mode and modes[mode] then
     local mode_fg = modes[mode].bg
     local txt, ico = modes[mode].txt or "", modes[mode].i or ""
-    local indicator = str.pad(str.padr(ico) .. txt, 1)
-
+    local indicator = str.pad(str.pad(ico) .. txt, 1)
     lsb:append(mode_fg, bg, indicator, { "Bold" })
-
     width.mode = str.width(indicator)
   end --~ }}}
-
-  --~ {{{2: workspace indicator
-
   local ws = window:active_workspace()
   if ws ~= "" and not mode then
     local ws_bg = theme.brights[6]
@@ -134,7 +133,7 @@ wt.on("update-status", function(window, pane)
   --~ {{{2: Status bar
 
   fg = color_parse(fg)
-  local palette = { fg:darken(0.15), fg, fg:lighten(0.15), fg:lighten(0.25) }
+  local palette = { fg:darken(0.35), fg:darken(0.25), fg:darken(0.1), fg:lighten(0.25) }
   local cwd, hostname = fs.get_cwd_hostname(pane, true)
 
   --~~ {{{3: battery cells
@@ -185,7 +184,6 @@ wt.on("update-status", function(window, pane)
     end
     return total_width
   end
-
   local function find_best_fit(combinations, max_width, sep_width, pad_width)
     local best_fit = nil
     local best_fit_width = 0
@@ -200,22 +198,22 @@ wt.on("update-status", function(window, pane)
 
     return best_fit or { "", "", "", "" }
   end
-
   local cells = tbl.reverse(
     find_best_fit(tbl.cartesian(sets), width.usable, str.width(sep.sb.right), 5)
   )
-
   -- Render the best fit, ensuring correct colors
   for i = 1, #cells do
     local cell_bg, cell_fg = palette[i], i == 1 and last_fg or palette[i - 1]
     local rsep = sep.sb.right
 
+    -- Append the separator with its background and foreground
     rsb:append(cell_fg, cell_bg, rsep)
     rsb:append(cell_bg, theme.tab_bar.background, str.pad(cells[i]), { "Bold" })
   end
   --~ }}}
 
   window:set_right_status(rsb:format())
+
   -- }}}
 end)
 

@@ -1,4 +1,6 @@
 local Utils = require "utils"
+local wezterm = require "wezterm"
+local mux = wezterm.mux
 local color = Utils.fn.color
 
 ---@diagnostic disable-next-line: undefined-field
@@ -14,10 +16,41 @@ local theme = Config.color_schemes[Config.color_scheme]
 Config.background = {
   {
     source = { Color = theme.background },
-    width = "100%",
-    height = "100%",
+    width = "120%",
+    height = "120%",
+    vertical_offset = "-10%",
+    horizontal_offset = "-10%",
     opacity = G.opacity or 1,
   },
+}
+
+Config.max_fps = 120
+-- local bar = wezterm.plugin.require "https://github.com/adriankarlen/bar.wezterm"
+-- bar.apply_to_config(Config, {
+--   max_width = 32,
+--   modules = {
+--     spotify = {
+--       enabled = false,
+--     },
+--     hostname = {
+--       enabled = false,
+--     },
+--   },
+-- })
+wezterm.on("gui-startup", function(cmd)
+  local screen = wezterm.gui.screens().active
+  local _, _, window = mux.spawn_window(cmd or {})
+  local gui = window:gui_window()
+
+  local width = 0.95 * screen.width
+  local height = 0.90 * screen.height
+  gui:set_inner_size(width, height)
+  gui:set_position((screen.width - width) / 2, (screen.height - height) / 2)
+end)
+
+Config.inactive_pane_hsb = {
+  saturation = 0.6,
+  brightness = 0.6,
 }
 
 Config.bold_brightens_ansi_colors = "BrightAndBold"
@@ -33,16 +66,16 @@ Config.command_palette_font_size = 14
 Config.command_palette_rows = 20
 
 ---cursor
-Config.cursor_blink_ease_in = "EaseIn"
-Config.cursor_blink_ease_out = "EaseOut"
+Config.cursor_blink_ease_in = "Linear"
 Config.cursor_blink_rate = 500
-Config.default_cursor_style = "BlinkingUnderline"
-Config.cursor_thickness = 1
+Config.cursor_thickness = 2
+Config.force_reverse_video_cursor = true
+Config.default_cursor_style = "BlinkingBlock"
 Config.force_reverse_video_cursor = true
 
-Config.enable_scroll_bar = true
+Config.enable_scroll_bar = false
 
-Config.hide_mouse_cursor_when_typing = true
+Config.hide_mouse_cursor_when_typing = false
 
 ---text blink
 Config.text_blink_ease_in = "EaseIn"
@@ -53,7 +86,7 @@ Config.text_blink_rate = 500
 Config.text_blink_rate_rapid = 250
 
 ---visual bell
-Config.audible_bell = "SystemBeep"
+Config.audible_bell = "Disabled"
 Config.visual_bell = {
   fade_in_function = "EaseOut",
   fade_in_duration_ms = 200,
@@ -62,7 +95,8 @@ Config.visual_bell = {
 }
 
 ---window appearance
-Config.window_padding = { left = 2, right = 2, top = 2, bottom = 1 }
+Config.window_padding = { left = 0, right = 0, top = 1.25, bottom = 1.25 }
+Config.window_decorations = "RESIZE"
 Config.integrated_title_button_alignment = "Right"
 Config.integrated_title_button_style = "Windows"
 Config.integrated_title_buttons = { "Hide", "Maximize", "Close" }
